@@ -1,0 +1,246 @@
+﻿@import "../../modules/_base.scss";
+/*Gallery*/
+.b-gallery{
+    padding-top:20px;
+    overflow:hidden;
+    background:$primary;
+    color:#fff;
+}
+
+.b-gallery__main,
+.b-gallery__albums{
+    @extend .g-column;
+}
+
+
+@include media($tablet){
+    .b-gallery__main,
+    .b-gallery__albums{
+        height:500px;
+    }
+}
+
+@include media($large){
+    .b-gallery{
+        height:500px;
+        padding:0;
+    }
+    .b-gallery__main{
+        width:68.38%;
+    }
+    .b-gallery__albums{
+        width:31.62%;
+    }
+}
+
+
+//главный слайдер
+.b-gallery__slider{
+    max-width:740px;
+    margin:0 auto;
+
+    .bx-wrapper{
+        .bx-prev {
+		    left: 10px;
+	    }
+	    .bx-next {
+		    right: 10px;
+	    }
+    }
+}
+.b-gallery__list{
+    @extend .g-clearlist;
+    @extend .g-clearfix;
+}
+
+
+@include media($large){
+    .b-gallery__slider{
+        float:right;
+        margin:0;
+        max-width:1200px;
+        width:1200px;
+
+        .bx-wrapper{
+            .bx-prev {
+		        left: auto;
+                right:660px;
+	        }
+	        .bx-next {
+		        right: 30px;
+	        }
+        }
+    }
+
+    .b-gallery__list{
+        @include transform(translateX(460px)); //1200 - 740 - ширина слайда
+    }
+}
+
+.b-gallery__item{
+    @extend .g-column;
+    max-width:740px;
+}
+.b-gallery__img{
+    @extend .g-img-centered;
+}
+.b-gallery__thumb{
+    margin:0;
+    width:100%;
+    max-width:740px;
+    background-color:#75ba03;
+    position:relative;
+
+    &:after{
+        content:'';
+        display:block;
+        padding-top:(500*100%)/740;
+    }
+}
+
+
+//слайдер альбомов
+.b-album{
+    max-width:740px;
+    margin:0 auto;
+    height:500px;
+
+    .bx-wrapper{
+        .bx-prev {
+		    left: 0;
+	    }
+	    .bx-next {
+		    right: auto;
+            left:50px;
+	    }
+
+        .bx-controls-direction a{
+            margin-top:0;
+            top:300px;
+            border-right:1px solid #88cc1b;
+            background:#75ba03;
+
+            &:hover,
+            &:active{
+                background:$primary;
+            }
+        }
+    }
+}
+
+.b-gallery-name{//название текущего альбома
+    height:150px;
+    margin:0;
+    border-bottom:1px solid #88cc1b;
+    box-sizing:border-box;
+    position:relative;
+    overflow:hidden;
+}
+.b-gallery-name__inner{
+    @extend .g-valign;
+    font-family:$font-light;
+    font-size:rem(14px);
+    line-height:1.3;
+}
+
+.b-gallery-name__title{
+    display:block;
+    font-family:$font-bold;
+    font-size:rem(18px);
+}
+
+
+.b-album__list{
+    @extend .g-clearlist;
+}
+.b-album__item{
+    display:block;
+    height:100px;
+    box-sizing:border-box;
+    border-bottom:1px solid #88cc1b;
+}
+
+.b-album__thumb{
+    margin:0;
+    @extend .g-clearfix;
+    cursor:pointer;
+    
+
+    &:hover,
+    &:active{
+        .b-album__img{
+            opacity:.8;
+        }
+        .b-album__name{
+            color:$hover-color;
+        }
+    }
+}
+
+.b-album__img{
+    float:left;
+    width:140px;
+    height:100px;
+    @include transition(opacity .3s ease);
+}
+
+.b-album__name{
+    margin-left:160px;
+    height:100px;
+    position:relative;
+    font-family:$font-light;
+    line-height:1.3;
+    @include font-size(12px);
+    overflow:hidden;
+    @include transition(color .3s ease);
+    
+}
+
+.b-album__img,
+.b-album__name{
+    @include backface-visibility(hidden);
+}
+
+.b-album__inner{
+    @extend .g-valign;
+}
+
+.b-album__title{
+    display:block;
+    font-family:$font-bold;
+    font-size:rem(14);
+}
+
+.b-album__bottom{ //нижний блок на который поместим стрелки
+    height:50px;
+    background:#75ba03;
+}
+
+@include media($tablet){
+    .b-gallery-name__inner{
+        @include font-size(18px);
+    }
+    .b-gallery-name__title{
+        @include font-size(24px);
+    }
+    .b-album__title{
+        @include font-size(16px);
+    }
+}
+
+@include media($large){
+    .b-album{
+        width:800px;
+        max-width:800px;
+        margin:0;
+    }
+    .b-gallery-name__inner{
+        width:325px;
+        left:45px; //45+325=370
+    }
+    .b-album__thumb{
+        width:370px;
+    }
+}
+
+

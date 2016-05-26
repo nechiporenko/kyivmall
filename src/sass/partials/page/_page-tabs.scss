@@ -1,0 +1,63 @@
+﻿@import "../../modules/_base.scss";
+/*Page tabs*/
+.b-tabs{
+    @extend .g-clearfix;
+    @extend .g-clearlist;
+}
+
+.js .b-tabs__item{
+    display:none; //покажем скриптом
+    &:first-child{
+        display:block;
+    }
+}
+
+.b-tabs__nav{//контейнер для линков - переключателей
+    @extend .g-clearfix;
+    margin-bottom:35px;
+}
+
+.b-tabs__link{//линки - переключатели
+    display:block;
+    font-family:$font-bold;
+    font-size:rem(14px);
+    text-decoration:none;
+    text-transform:uppercase;
+    white-space:nowrap;
+
+    [class^="icon-"], [class*=" icon-"]{ //увеличим иконку стрелки
+        @include transform(scale(1.8) translate(5px, .5px));
+    }
+
+    &:hover,
+    &:active{
+        color:darken($primary, 7%);
+    }
+}
+
+.b-tabs__link--prev{
+    [class^="icon-"], [class*=" icon-"]{
+        @include transform(scale(1.8) translate(0, .5px));
+        margin-right:10px;
+    }
+}
+
+@include media($tablet){
+    .b-tabs__nav{
+        padding-right:40px;
+    }
+
+    .b-tabs__link--prev{
+        float:left;
+    }
+
+    .b-tabs__link--next{
+        float:right;
+    }
+}
+
+@include media($large){
+    .b-tabs__nav--thin{//для секции Основные характеристики - подровняем по правому краю блока
+        padding-right:165px;
+    }
+}

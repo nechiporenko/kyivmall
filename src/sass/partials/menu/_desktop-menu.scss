@@ -1,0 +1,53 @@
+﻿@import "../../modules/_base.scss";
+/* Desktop Menu */
+.h-menu{
+    @extend .g-clearlist;
+    padding-left:25px;
+    padding-right:20px;
+    line-height:0;
+    font-size:1px;
+    text-align:justify;
+    text-align-last:justify;
+    display:none;
+
+    &:after{
+        content:'';
+        display:inline-block;
+        width:100%;
+        height:0;
+        visibility:hidden;
+        overflow:hidden;
+    }
+
+    @include media($large){
+        display:block;
+    }
+}
+
+.h-menu__item{
+    display:inline-block;
+    vertical-align:top;
+    height:40px;
+    text-align:center;
+    line-height:normal;
+    @include font-size(12px);
+}
+
+.h-menu__link{
+    display:block;
+    height:40px;
+    line-height:40px;
+    white-space:nowrap;
+    color:#fff;
+    text-decoration:none;
+
+    &:hover,
+    &:active,
+    &.current{
+        color:$hover-color;
+    }
+
+    &.current{
+        cursor:default;
+    }
+}

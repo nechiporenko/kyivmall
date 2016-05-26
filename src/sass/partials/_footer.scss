@@ -1,0 +1,67 @@
+@import "../modules/base";
+/*Site Footer*/
+.b-footer{
+    padding:14px 0;
+    background:$primary;
+    color:#fff;
+    text-align:center;
+    @include font-size(16px);
+}
+
+.b-footer__col{
+    @extend .g-column;
+}
+
+.b-footer__link{
+    display:inline-block;
+    height:27px;
+    line-height:27px;
+    white-space:nowrap;
+    color:#fff;
+    text-decoration:none;
+}
+
+.f-social{
+    @extend .g-clearlist;
+    font-size:0;
+    text-align:center;
+}
+.f-social__item{
+    display:inline-block;
+    @include font-size(20px);
+    margin:15px 5px 0;
+}
+
+.f-social__link{
+    @extend .b-footer__link;
+    display:block;
+
+    &:hover,
+    &:active{
+        color:$hover-color;
+    }
+}
+
+@include media($tablet){
+    .b-footer{
+        text-align:left;
+    }
+    .b-footer__col{
+        width:(100%-$grid-gutter)/2;
+        margin-left:$grid-gutter;
+
+        &:first-child{
+            margin-left:0;
+        }
+    }
+    .f-social{
+        float:right;
+        text-align:right;
+    }
+    .f-social__item{
+        margin:0 0 0 10px;
+        &:first-child{
+            margin-left:0;
+        }
+    }
+}

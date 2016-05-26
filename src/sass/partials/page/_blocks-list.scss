@@ -1,0 +1,126 @@
+﻿@import "../../modules/_base.scss";
+/*Block's list*/
+.b-list{
+    @extend .g-clearlist;
+    @extend .g-clearfix;
+}
+
+.b-list__item{
+    @extend .g-column;
+
+    @include media($small){
+        @include span-columns(6);
+        @include omega(2n);
+    }
+
+    @include media($desktop){
+        @include omega-reset(2n);
+        @include span-columns(4);
+        @include omega(3n);
+    }
+}
+
+.b-list__inner{
+    max-width:280px;
+    margin:0 auto 2*$project-line-height;
+    line-height:1;
+}
+
+
+.b-list__icon{
+    height:100px;
+    margin-right:45px;
+    position:relative;
+}
+
+.b-list__img{
+    position:absolute;
+    right:0; bottom:0;
+}
+
+.b-list__info{
+    padding:140px 40px 2px 0;
+    font-family:$font-bold;
+    text-align:right;
+    border-right:5px solid $primary;
+    white-space:nowrap;
+    text-transform:lowercase;
+    position:relative;
+}
+
+.b-list__title{
+    height:115px;
+    padding-top:35px;
+    box-sizing:border-box;
+    position:absolute; //нужно чтобы длинные строчки выходили за пределы контейнера на десктопе
+    top:0; right:40px;
+    overflow:hidden;
+    font-size:rem(15px);
+    line-height:1.2;
+
+    &:after{
+        content:'';
+        display:block;
+        position:absolute;
+        width:55px;
+        height:2px;
+        background:$text-color;
+        bottom:0; right:0;
+    }
+}
+
+
+.b-list__subtitle{
+    display:block;
+    font-size:rem(18px);
+}
+
+@include media($tablet){
+    .b-list__title{
+        @include font-size(16px);
+    }
+    .b-list__subtitle{
+        @include font-size(22px);
+    }
+}
+
+@include media($large){
+    .b-list__title{
+        @include font-size(20px);
+    }
+    .b-list__subtitle{
+        @include font-size(25px);
+    }
+
+    .b-list__inner{//уплотним
+        margin:0 0 2*$project-line-height;
+        max-width:250px;
+    }
+
+    .b-list__item{
+        &:nth-child(3n+1){
+            .b-list__inner{
+                margin-left:45px;
+            }
+        }
+        &:nth-child(3n){
+            .b-list__inner{
+                margin-left:-30px;
+            }
+        }
+    }
+}
+
+
+//альтернативный стиль (для блоков в Преимуществах)
+.b-list--alt{
+    .b-list__info{
+        padding-top:128px;
+    }
+    .b-list__title{
+        height:125px;
+    }
+    .b-list__icon{
+        margin-bottom:-20px;
+    }
+}

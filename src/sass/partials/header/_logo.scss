@@ -1,0 +1,73 @@
+﻿@import "../../modules/_base.scss";
+
+/*Header Logo*/
+.h-logo{
+    display:block;
+    width:130px;
+    height:60px;
+    text-decoration:none;
+    position:absolute;
+    top:-10px; //паддинг в .b-header__main
+    left:0;
+    background:#fff;
+    background:rgba(#fff, .9);
+    @include transition-property(transform, background);
+    @include transition-duration(.3s);
+    @include transition-timing-function(linear);
+
+    &:hover,
+    &:active{
+        background:#fff;
+    }
+}
+.h-logo__inner{
+    margin:0;
+    @extend .g-align;
+}
+
+.h-logo__img{
+    width:106px;
+    height:21px;
+    background-image:url(../img/logo.svg);
+    background-position:left top;
+    background-repeat:no-repeat;
+}
+
+.h-logo__tel{
+    padding-top:3px;
+    font-size:rem(10px);
+    white-space:nowrap;
+    letter-spacing:rem(-.1px);
+}
+
+
+@include media($tablet){
+    .h-logo{
+        top:-28px;
+        width:230px;
+        height:96px;
+    }
+
+    .h-logo__img{
+        width:186px;
+        height:37px;
+    }
+    .h-logo__tel{
+        padding-top:5px;
+        @include font-size(18px);
+        
+        @include transform(translateX(-3px));
+    }
+}
+
+@include media($large){
+    .stuck .h-logo{
+        @include transform(translateY(28px));
+        background:#f5f5f5;
+
+        &:hover,
+        &:active{
+            background:#f1f1f1;
+        }
+    }
+}

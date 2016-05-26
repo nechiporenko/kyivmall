@@ -1,0 +1,28 @@
+﻿@import "../../modules/_base.scss";
+/*Scroll-up button*/
+.scroll-up-btn{
+    @extend .g-clearbutton;
+    @include size(50px);
+    line-height:50px;
+    color:#fff;
+    background-color:$primary;
+    text-align:center;
+    @include font-size(24px);
+    position:fixed;
+    right:10px;
+    bottom:10px;
+    opacity:.5;
+    @include transition(.3s opacity);
+    z-index:1000;
+    cursor:pointer;
+    display:none; //покажем скриптом
+
+    &:hover,
+    &:active{
+        opacity:.9;
+    }
+
+    @include media($tablet){
+        bottom:60px;
+    }
+}

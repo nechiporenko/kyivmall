@@ -1,0 +1,131 @@
+﻿@import "../../modules/_base.scss";
+/*Post Block*/
+.b-post{
+    max-width:360px;
+    margin:0 auto 3*$project-line-height;
+}
+
+.b-post--last{
+    @include media($large){
+        @include transform(translateX(-52px));
+    }
+}
+.b-post__thumb{
+    margin-bottom:20px;
+    padding:25px 0 0 25px;
+    position:relative;
+
+    &:before{
+        content:'';
+        display:block;
+        @include size(75px);
+        position:absolute;
+        top:0;
+        left:0;
+        background:$primary;
+        z-index:-1;
+    }
+}
+
+.b-post__link{
+    display:block;
+    position:relative;
+    width:100%;
+    max-width:335px;
+    @extend .g-shadow-hover;
+
+    &:after{
+        content:'';
+        display:block;
+        padding-top:(190*100%)/335;
+    }
+
+    &:hover{
+        background:$text-color;
+        .b-post__img{
+            opacity:.9;
+        }
+    }
+}
+
+.b-post__img{
+    @extend .g-img-centered;
+    @include backface-visibility(hidden);
+    @include transition(opacity .3s ease-in);
+}
+
+.b-post__info{
+    padding:0 110px 0 25px;
+    box-sizing:border-box;
+    position:relative;
+}
+
+.b-post__title{
+    display:block;
+    margin-bottom:20px;
+    font-family:$font-bold;
+    color:$text-color;
+    font-size:rem(14px);
+    line-height:1.25;
+}
+
+.b-post__more{
+    @extend .b-tabs__link;
+    font-size:rem(10px);
+}
+
+.b-post__date{
+    width:104px;
+    padding-left:22px;
+    position:absolute;
+    top:0; right:0;
+    box-sizing:border-box;
+    line-height:1;
+
+    &:before{
+        content:'';
+        display:block;
+        position:absolute;
+        top:-55px;
+        left:0;
+        width:8px;
+        height:175px;
+        background:$primary;
+    }
+}
+
+.b-post__day{
+    display:block;
+    font-family:$font-bold;
+    @include font-size(68px);
+}
+
+.b-post__month{
+    display:block;
+    margin-top:28px;
+    position:relative;
+    font-family:$font-bold;
+    font-size:rem(10px);
+    text-transform:uppercase;
+
+    &:before{
+        content:'';
+        display:block;
+        width:20px;
+        height:2px;
+        background:$text-color;
+        position:absolute;
+        left:0;
+        top:-6px;
+    }
+}
+
+@include media($tablet){
+    .b-post__title{
+        @include font-size(16px);
+    }
+    .b-post__more,
+    .b-post__month{
+        @include font-size(12px);
+    }
+}

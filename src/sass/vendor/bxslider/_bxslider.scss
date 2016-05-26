@@ -1,0 +1,91 @@
+﻿@import "../../modules/base";
+/** BX Slider **/
+
+$loader:   '../img/loader.gif';
+
+//layout
+.bx-wrapper {
+	position: relative;
+    margin:0 auto;
+	padding: 0;
+	-ms-touch-action: pan-y;
+	touch-action: pan-y;
+}
+
+
+
+.bx-viewport {
+	//fix other elements on the page moving (on Chrome)
+	-webkit-transform: translatez(0);
+}
+
+// THEME
+.bx-wrapper {
+	.bx-pager,
+	.bx-controls-auto {
+		position: absolute;
+        bottom: $project-line-height;
+		width: 100%;	
+	}
+}
+
+// LOADER
+.bx-wrapper .bx-loading {
+	min-height: 50px;
+	background: url($loader) center center no-repeat #fff;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2000;
+}
+
+
+// DIRECTION CONTROLS (NEXT / PREV)
+.bx-wrapper {
+	.bx-prev {
+		left: -10px;
+	}
+	.bx-next {
+		right: -10px;
+	}
+	.bx-controls-direction a {
+        display:block;
+		position: absolute;
+		top: 50%;
+		margin-top: -25px;
+		outline: 0;
+		@include size(50px);
+        line-height:50px;
+        text-align:center;
+        text-decoration:none;
+		background:$primary;
+        color:#fff;
+        @include font-size(18px);
+		z-index: 100;
+        opacity:.8;
+        @include transition-property(opacity, background);
+        @include transition-duration(.3s);
+        box-sizing:border-box;
+
+        &:hover,
+        &:active{
+            opacity:1;
+        }
+
+        &.disabled {
+			opacity:.3;
+            cursor:default;
+		}
+	}
+
+    @include media($large){
+        .bx-prev {
+		    left: 0;
+	    }
+	    .bx-next {
+		    right: 0;
+	    }
+    }
+}

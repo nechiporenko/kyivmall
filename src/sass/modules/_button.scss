@@ -1,0 +1,71 @@
+﻿@import "base";
+/* Buttons */
+.g-btn{
+    display:inline-block;
+    vertical-align:middle;
+    height:50px;
+    line-height:50px;
+    padding:0 10px;
+    color:#fff;
+    font-family:$font-bold;
+    @include font-size(14px);
+    text-decoration: none;
+    text-transform:uppercase;
+    text-align: center;
+    white-space: nowrap;
+    background: $primary;
+    border-radius:$border-radius;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    outline:0;
+
+    &:hover,
+    &:focus,
+    &:active{
+        color:#fff;
+        background:darken($primary, 5%);
+    }
+
+    &:active{
+        @include transform(translateY(3px));
+    }
+
+    &:disabled{
+        background:grey;
+    }
+}
+
+.g-clearbutton{
+    display:inline-block;
+    vertical-align:middle;
+    border:none;
+    background:none;
+    padding:0;
+    cursor: pointer;
+    text-align:center;
+    text-decoration:none;
+    white-space:nowrap;
+    box-sizing: border-box;
+    outline:0;
+
+    &:active{
+        @include transform(translateY(3px));
+    }
+}
+
+
+.g-btn--alt{
+    border:2px solid #fff;
+    background:none;
+
+    &:hover,
+    &:focus,
+    &:active{
+        color:$hover-color;
+        border-color:$hover-color;
+        background:none;
+    }
+}
+
+

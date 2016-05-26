@@ -1,0 +1,79 @@
+﻿@import "../../modules/_base.scss";
+/*Rent blocks*/
+.b-rent{
+    max-width:675px;
+    margin:0 auto 35px;
+}
+
+.b-rent__title{
+    @extend .g-subtitle;
+    padding-bottom:15px;
+    margin-bottom:$project-line-height;
+    position:relative;
+
+    &:after{
+        content:'';
+        display:block;
+        width:180px;
+        height:8px;
+        background:$primary;
+        position:absolute;
+        bottom:0; left:0;
+    }
+}
+
+.b-rent__inner{
+    padding-left:10px;
+    margin-bottom:40px;
+    position:relative;
+}
+.b-rent__thumb{
+    max-width:320px;
+    position:relative;
+
+    &:after{
+        content:'';
+        display:block;
+        padding-top:(190*100%)/320;
+    }
+}
+
+.b-rent__img{
+    @extend .g-img-centered;
+}
+
+.b-rent__info{
+    width:100%;
+    padding:10px;
+    max-width:465px;
+    background:$primary;
+    color:#fff;
+    font-family:$font-medium;
+    box-sizing:border-box;
+    overflow:hidden;
+}
+
+@include media($tablet){
+    .b-rent__title{
+        @include font-size(30px);
+    }
+    .b-rent{
+        background:url('../img/rent-bg.png') 30px 30px no-repeat;
+    }
+    .b-rent__inner{
+        padding-left:30px;
+    }
+    .b-rent__info{
+        padding:25px;
+        max-height:190px;
+        position:absolute;
+        left:180px;
+        bottom:0;
+    }
+}
+
+@include media($large){
+    .b-rent{
+        @include transform(translateX(13px)); //выровняем по правому краю логотипа
+    }
+}

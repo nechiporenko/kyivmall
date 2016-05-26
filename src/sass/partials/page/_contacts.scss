@@ -1,0 +1,123 @@
+﻿@import "../../modules/_base.scss";
+/*Contacts section*/
+.b-contacts{
+    overflow:hidden;
+}
+.b-contacts__map,
+.b-contacts__info{
+    @extend .g-column;
+}
+
+.b-contacts__map{
+    height:420px;
+    background:#e9f5c5;
+}
+
+.b-contacts__thumb{
+    height:420px;
+    float:right;
+    position:relative;
+    width:100%;
+    
+    &:before{
+        content:'';
+        display:block;
+        position:absolute;
+        top:0; right:-10px; bottom:0; left:-10px;
+        background-image:url(../img/map-xs.png);
+        background-repeat:no-repeat;
+        background-position:top right;
+    } 
+}
+
+@include media($tablet){
+    .b-contacts__thumb{
+        &:before{
+            background-image:url(../img/map-xl.png);
+            left:-150px;
+            right:-150px;
+        }
+    }
+}
+
+@include media($desktop){
+    .b-contacts__map,
+    .b-contacts__info{
+        width:50%;
+    }
+
+    .b-contacts__info{
+        padding-left:30px;
+        height:420px;
+    }
+
+    .b-contacts__thumb{
+        width:1200px;
+        &:before{
+            left:0;
+            right:0;
+        }
+    }
+
+}
+
+@include media($large){
+    .b-contacts__map{
+        width:68.38%;
+    }
+    .b-contacts__info{
+        width:31.62%;
+    }
+}
+
+
+.b-contacts__title{
+    @extend .g-subtitle;
+    margin-bottom:14px;
+    padding:17px 0;
+    border-bottom:1px solid $border-color;
+}
+
+.b-contacts__logo{
+    display:block;
+    margin-bottom:14px;
+}
+
+.b-contacts__section{
+    padding-bottom:20px;
+    margin-bottom:14px;
+    border-bottom:1px solid $border-color;
+    @include font-size(14px);
+}
+
+.b-contacts__section--last{
+    margin-bottom:0;
+    border-bottom:none;
+}
+
+.b-contacts__list{
+    @extend .g-clearlist;
+
+    li{
+        position:relative;
+        padding-left:25px;
+    }
+
+    [class^="icon-"], [class*=" icon-"]{
+        position:absolute;
+        top:7px;
+        left:0;
+        margin-left:0;
+        color:$primary;
+    }
+}
+.b-contacts__link{
+    color:$text-color;
+    text-decoration:none;
+    white-space:nowrap;
+
+    &:hover,
+    &:active{
+        color:$primary;
+    }
+}

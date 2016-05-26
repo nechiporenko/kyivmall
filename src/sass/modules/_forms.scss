@@ -1,0 +1,161 @@
+﻿@import "base";
+/* Forms */
+
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+    @include appearance(none);
+}
+
+.g-input,
+.g-select,
+.g-textarea{
+    display:inline-block;
+    vertical-align:middle;
+    width:100%;
+    margin-bottom: 30px;
+    padding:6px 10px;
+    background-color: #fff;
+    border: 1px solid $border-color;
+    border-radius:$border-radius;
+    color:$text-color;
+    font-family:$font-light;
+    @include font-size(16px);
+    box-shadow: none;
+    box-sizing: border-box;
+
+    @include placeholder{
+        color:#888888;
+        text-overflow:ellipsis;
+        @include transition(color .2s ease-in);
+    }
+
+    &:hover,
+    &:focus{
+        border-color:$primary;
+        outline:0;
+    }
+
+    &:focus{
+        box-shadow:inset 0 0 4px rgba($primary, .5);
+    }
+
+    &:disabled{
+        border-color:$border-color;
+        box-shadow:inset 0 0 4px rgba($border-color, .8);
+    }
+
+    &.error{
+        border-color:red;
+        box-shadow:inset 0 0 4px rgba(red, .5);
+
+        @include placeholder{
+            color:red;
+        }
+    }
+}
+
+.g-input,
+.g-select{
+    height:38px;
+}
+
+.g-textarea{
+    min-height:106px;
+}
+
+.g-label{
+    display: block;
+    margin-bottom:5px;
+    font-family:$font-light;
+
+    &.error{
+        color:red;
+    }
+}
+.g-label__body{
+    display: inline-block;
+    margin-left:10px;
+    font-weight: normal;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+
+
+//для элементов на зеленом фоне фоне
+.g-input--alt,
+.g-select--alt,
+.g-textarea--alt{
+    padding-left:0;
+    padding-right:35px;
+    border:none;
+    background:none;
+    border-bottom:1px solid #fff;
+    color:#fff;
+
+    @include placeholder{
+        color:#fff;
+    }
+
+    &:hover,
+    &:focus{
+        border-color:$hover-color;
+
+        @include placeholder{
+            color:$hover-color;
+        }
+    }
+
+    &:focus{
+        box-shadow:none;
+    }
+
+    &:disabled{
+        border-color:$border-color;
+        box-shadow:none;
+        color:$border-color;
+
+        @include placeholder{
+            color:$border-color;
+        }
+    }
+
+    &.error{
+        border-color:pink;
+        box-shadow:none;
+
+        @include placeholder{
+            color:pink;
+        }
+    }
+}
+
+.g-textarea--alt{
+    min-height:38px;
+    height:38px;
+    resize:none;
+    overflow:hidden;
+}
+
+//добавим иконки
+.g-input-field{
+    position:relative;
+
+    [class^="icon-"], [class*=" icon-"]{
+        @include font-size(20px);
+        margin-left:0;
+        position:absolute;
+        top:8px; right:0;
+        z-index:2;
+    }
+}
+
+

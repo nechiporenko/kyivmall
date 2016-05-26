@@ -1,0 +1,143 @@
+﻿@import "../../modules/_base.scss";
+/*Subscribe section*/
+.b-subscribe{
+    overflow:hidden;
+}
+.b-subscribe__hero,
+.b-subscribe__send,
+.b-subscribe__col{
+    @extend .g-column;
+}
+
+.b-subscribe__hero{
+    height:200px;
+    position:relative;
+    z-index:5;
+
+    &:before{
+        content:'';
+        position:absolute;
+        top:0;
+        right:-115px;
+        @include triangle(200px, #fff, up-left);
+    }
+}
+
+.b-subscribe__send{
+    background:$primary;
+    color:#fff;
+    position:relative;
+    z-index:2;
+
+    &:before,
+    &:after{
+        content:'';
+        display:block;
+        position:absolute;
+        top:0; right:-10px; bottom:0; left:-10px;
+    }
+
+    &:before{//background
+        z-index:-1;
+        background-position:center center;
+        background-repeat:no-repeat;
+        background-image:url(../img/hero/hero-xs.jpg);
+    }
+    &:after{//mask
+        background:$primary;
+        background:rgba($primary, .80);
+        z-index:1;
+    }
+}
+
+.b-subscribe__title{
+    @extend .g-subtitle;
+    width:100%;
+    margin:0;
+    padding-bottom:$project-line-height;
+    @extend .g-valign;
+
+    &:after{
+        content:'';
+        display:block;
+        width:110px;
+        height:8px;
+        background:$primary;
+        position:absolute;
+        bottom:0;
+        left:0;
+    }
+}
+
+.b-subscribe__form{
+    padding:32px 0;
+    max-width:280px;
+    margin:0 auto;
+    position:relative;
+    z-index:5;
+    @extend .g-clearfix;
+}
+
+.b-subscribe__btn{
+    @extend .g-btn;
+    @extend .g-btn--alt;
+    padding:0 32px;
+}
+
+@include media($tablet){
+    .b-subscribe__send{
+        &:before,
+        &:after{
+            left:-120px;
+            right:-120px;
+        }
+    }
+
+    .b-subscribe__form{
+        max-width:100%;
+        margin:0;
+    }
+
+    .b-subscribe__col{
+        width:280px;
+        margin-right:40px;
+    }
+
+    .b-subscribe__btn{
+        margin-top:40px;
+    }
+}
+
+@include media($desktop){
+    .b-subscribe__send{
+        &:before{
+            background-image:url(../img/hero/hero-xl.jpg);
+        }
+    }
+
+    .b-subscribe__col{
+        margin-right:120px;
+    }
+}
+
+@include media($large){
+    .b-subscribe{
+        height:200px;
+        margin-top:70px;
+    }
+    .b-subscribe__hero{
+        width:25.64%;
+    }
+
+    .b-subscribe__send{
+        width:74.36%;
+        height:200px;
+        padding-left:160px;
+
+        &:before,
+        &:after{
+            left:-85px;
+            right: -500px;
+        }
+    }
+}

@@ -1,0 +1,97 @@
+@import "../modules/base";
+/*Site header*/
+.b-header{
+    position:relative;
+    height:600px;
+    overflow:hidden;
+}
+
+.b-header__main{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+    padding-top:10px; //высота лого - 60, высота иннера 40
+
+    @include media($tablet){
+        padding-top:28px; //высота лого - 96, , высота иннера 40
+    }
+
+    @include media($large){
+        &.stuck{
+            position:fixed;
+            padding-top:0;
+        }
+    }
+}
+
+.b-header__inner{
+    @extend .g-container;
+    height:40px;
+    //max-width:1030px;
+    max-width:1050px;
+    position:relative;
+    padding-left:130px;
+    color:#fff;
+    @include backface-visibility(hidden);
+
+    &:before{//зеленая подложка
+        content:'';
+        display:block;
+        position:absolute;
+        top:0; bottom:0; left:130px;
+        width:300%;
+        background:$primary;
+        background:rgba($primary, .9);
+        z-index:-1;
+    }
+
+    @include media($tablet){
+        padding-left:230px;
+        &:before{
+            left:230px;
+        }
+    }
+
+    @include media($large){
+        padding-right:55px;//у lang-menu бужет абс.позиция на этом разрешении
+    }
+}
+
+
+//header mobile menu switcher
+.b-header__mbtn{
+    float:right;
+    margin-left:10px;
+    @extend .g-clearbutton;
+    @include size(40px);
+    line-height:40px;
+    color:#fff;
+    text-align:right;
+
+    [class^="icon-"], [class*=" icon-"]{
+        @include transition(transform .3s ease);
+    }
+
+    &:hover,
+    &:active,
+    &.active{
+        color:$hover-color;
+    }
+
+    &.active{
+        [class^="icon-"], [class*=" icon-"]{
+            @include transform(rotate(-90deg));
+        }
+    }
+
+    @include media($large){
+        display:none;
+    }
+}
+
+@import "header/_logo.scss";
+@import "header/_lang.scss";
+@import "header/_hero.scss";
+
