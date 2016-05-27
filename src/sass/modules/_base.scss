@@ -16,7 +16,8 @@ $text-color:#161b07;
 $border-color:#e0e0e0;
 $primary:#7bc601;
 $title-color:$primary;
-$hover-color:#ffea00;
+//$hover-color:#ffea00;
+$hover-color:#042523;
 
 //fonts
 $font-regular:'GothamProRegular';
@@ -25,6 +26,8 @@ $font-title:$font-bold;
 $font-medium:'GothamProMedium';
 $font-light:'GothamProLight';
 $font-italic:'GothamProItalic';
+
+$font-alt:'HelveticaMedium';
 
 //mixins
 @function calculateRem($size) {

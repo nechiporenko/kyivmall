@@ -37,7 +37,11 @@
     padding-top:3px;
     font-size:rem(10px);
     white-space:nowrap;
-    letter-spacing:rem(-.1px);
+    //letter-spacing:rem(-.1px);
+
+
+    letter-spacing:rem(.55px);
+    font-family:$font-alt;
 }
 
 
@@ -57,6 +61,9 @@
         @include font-size(18px);
         
         @include transform(translateX(-3px));
+
+        //new
+        @include px2rem(letter-spacing, 1.11px);
     }
 }
 

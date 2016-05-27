@@ -14,7 +14,7 @@
 
 .b-tabs__nav{//контейнер для линков - переключателей
     @extend .g-clearfix;
-    margin-bottom:35px;
+    //margin-bottom:35px;
 }
 
 .b-tabs__link{//линки - переключатели
@@ -31,7 +31,7 @@
 
     &:hover,
     &:active{
-        color:darken($primary, 7%);
+        color:$hover-color;
     }
 }
 

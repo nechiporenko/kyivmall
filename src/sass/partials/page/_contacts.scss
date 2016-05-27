@@ -11,9 +11,15 @@
 .b-contacts__map{
     height:420px;
     background:#e9f5c5;
+    position:relative;
 }
 
-.b-contacts__thumb{
+
+.js .b-contacts__thumb{
+    display:none;
+}
+
+.b-contacts__thumb{//контейнер для карты - картинки - покажем когда нет js
     height:420px;
     float:right;
     position:relative;
@@ -30,6 +36,16 @@
     } 
 }
 
+.no-js .b-contacts__gmap{
+    display:none;
+}
+.b-contacts__gmap{//контейнер для Гугл-карты
+    position:absolute;
+    top:0; bottom:0;
+    left:-10px; right:-10px;
+    background:#ddd;
+}
+
 @include media($tablet){
     .b-contacts__thumb{
         &:before{
@@ -37,6 +53,11 @@
             left:-150px;
             right:-150px;
         }
+    }
+
+    .b-contacts__gmap{
+        left:-120px;
+        right:-120px;
     }
 }
 
@@ -59,6 +80,9 @@
         }
     }
 
+    .b-contacts__gmap{
+        right:0;
+    }
 }
 
 @include media($large){
@@ -70,6 +94,17 @@
     }
 }
 
+@include media(min-width 1380px){
+    .b-contacts__gmap{
+        left:-200px;
+    }
+}
+
+@include media($extra-large){
+    .b-contacts__gmap{
+        left:-380px;
+    }
+}
 
 .b-contacts__title{
     @extend .g-subtitle;
@@ -120,4 +155,11 @@
     &:active{
         color:$primary;
     }
+}
+
+.b-contacts__maptitle{
+    font-family:$font-bold;
+    font-size:rem(16px);
+    color:$primary;
+    white-space:nowrap;
 }

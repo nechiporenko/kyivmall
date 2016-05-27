@@ -10,6 +10,10 @@
     text-align-last:justify;
     display:none;
 
+
+    font-family:$font-alt;
+    letter-spacing:.3px;
+
     &:after{
         content:'';
         display:inline-block;

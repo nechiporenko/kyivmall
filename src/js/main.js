@@ -173,6 +173,8 @@ jQuery(document).ready(function ($) {
     (function () {
         var $menu_link = $('.h-menu__link, .m-menu__link'),
             $sections = $('.page__section, .b-header__hero'),
+            isGoogleMapLoad = false, //будем загружать Гугл карту при скролле
+            mapSectionID = 'building', //когда прокрутим до этой секции - загрузим карту
             method = {};
 
         method.changeLinkState = function (el) {//находим и подсвечиваем линк в десктоп и мобильном меню
@@ -203,6 +205,11 @@ jQuery(document).ready(function ($) {
         var waypoints = $sections.waypoint({//подключили плагин
             handler: function (direction) {
                 var prev = this.previous();//предыдущая секция
+
+                if (this.element.id === mapSectionID && !isGoogleMapLoad) {//когда дошли до предпоследней последней секции - загрузим карту
+                    initGoogleMap();
+                    isGoogleMapLoad = true;
+                };
 
                 if (direction === 'down') {//скроллим вниз
                     method.changeLinkState(this.element.id);
@@ -493,6 +500,69 @@ jQuery(document).ready(function ($) {
             });
         });
     })();
+
+    //
+    // Гугл карта
+    //---------------------------------------------------------------------------------------
+    function initGoogleMap() {//запуск - см. Навигация по секциям
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+            'callback=gmap_draw';
+
+        window.gmap_draw = function () {
+            var map_lating = new google.maps.LatLng(50.388161, 30.63978),
+                map_options = {
+                    zoom: 15,
+                    center: map_lating,
+                    panControl: false,
+                    zoomControl: true,
+                    scrollwheel: false,
+                    streetViewControl: false,
+                    scaleControl: true,
+                    mapTypeId: google.maps.MapTypeId.ROAD
+                },
+                map = new google.maps.Map(document.getElementById('map'), map_options),
+                marker = new google.maps.Marker({
+                    position: map_lating,
+                    icon: "img/marker.png",
+                    map: map
+                }),
+                info = new google.maps.InfoWindow({
+                    content: '<div class="b-contacts__maptitle">ТРЦ «KyivMall»</div>'
+                }),
+                styles = [
+                      {
+                          stylers: [
+                            { hue: "#7bc601" },
+                          ]
+                      }, {
+                          featureType: "all",
+                          elementType: "all",
+                          stylers: [
+                            { saturation: -150 }
+                          ]
+                      }
+                ];
+            map.setOptions({ styles: styles });
+
+            google.maps.event.addListener(marker, 'mouseover', function () {
+                info.open(map, marker);
+            });
+
+            google.maps.event.addListener(marker, 'mouseout', function () {
+                info.close(map, marker);
+            });
+
+            google.maps.event.addDomListener(window, 'resize', function () {
+                var center = map.getCenter();
+                google.maps.event.trigger(map, 'resize');
+                map.setCenter(center);
+            });
+        };
+
+        document.body.appendChild(script);
+    };
 
     //
     // Маска для телефонного номера
