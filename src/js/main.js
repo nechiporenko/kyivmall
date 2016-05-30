@@ -279,11 +279,15 @@ jQuery(document).ready(function ($) {
                 $album = $gallery.parents('.b-gallery').find('.js-album-slider'),//альбом галереи
                 $album_item = $album.find('.b-album__thumb'),
                 $title = $gallery.parents('.b-gallery').find('.js-gallery-name'),//заголовок текущего альбома
-                isGalleryLoad = false,//флаг
-                isGalleryImagesLoaded = false, //флаг
+                $lightbox = $gallery.parents('.b-gallery').find('.js-gallery-large'), //список с ссылками на крупные изображения,
+                lightbox, //объект лайтбокса
+                isGalleryLoad = false,//флаги состояний
+                isGalleryImagesLoaded = false,
+                isLightBoxStarted = false,
                 method = {};
 
-            method.startGallery = function () {
+            //--Методы Галереи--//
+            method.startGallery = function () {//запускаем главный слайдер галереи
                 if (!isGalleryLoad) {
                     $gallery.bxSlider({
                         auto: false,
@@ -317,13 +321,13 @@ jQuery(document).ready(function ($) {
                 };
             };
 
-            method.loadGallery = function (link) {//загрузка нового контента в слайдер Галереи
+            method.loadGallery = function (link) {//загрузка нового контента в главный слайдер Галереи
                 $gallery.load(link, function () {
                     method.startGallery();
                 });
             };
 
-            method.show2GalleryImages = function () {//после загрузки слайдера галереи загрузим первые 2 картинки
+            method.show2GalleryImages = function () {//после загрузки главного слайдера галереи загрузим первые 2 картинки
                 for (var i = 0; i < 2; i++) {
                     var $el = $gallery.children('li').eq(i).find('img[data-src]');
                     if ($el.length) {
@@ -332,7 +336,7 @@ jQuery(document).ready(function ($) {
                 };
             };
 
-            method.showAllGalleryImages = function () {//после того как начали скроллить слайдер галереи, дозагрузим остальные изображения
+            method.showAllGalleryImages = function () {//после того как начали скроллить главный слайдер галереи, дозагрузим остальные изображения
                 $gallery.children('li').each(function () {
                     var $el = $(this).find('img[data-src]');
                     if (!$el.hasClass('loaded')) {
@@ -350,6 +354,7 @@ jQuery(document).ready(function ($) {
                 };
             };
 
+            //--Методы слайдера альбомов--//
             method.startAlbumSlider = function () {//запускаем слайдер альбомов
                 $album.bxSlider({
                     mode: 'vertical',
@@ -360,8 +365,10 @@ jQuery(document).ready(function ($) {
                     minSlides: 3,
                     maxSlides: 3,
                     moveSlides: 1,
+                    infiniteLoop: false,
+                    hideControlOnEnd: true,
                     onSliderLoad: function (currentIndex) {//добавим к первому элементу класс current
-                        $album.children('li').eq(currentIndex + 3).find('.b-album__thumb').addClass('current');
+                        $album.children('li').eq(currentIndex).find('.b-album__thumb').addClass('current');
                     },
                 });
             };
@@ -373,24 +380,75 @@ jQuery(document).ready(function ($) {
                 $title.find('.b-gallery-name__subtitle').text(subtitle);
             };
 
+            //--Методы Лайтбокса--//
+            method.initLightBox = function () {//по клику на изображение в главной галерее будем открывать картинку в лайтбоксе
+                if (!isLightBoxStarted) {
+                    lightbox = $lightbox.find('a').simpleLightbox({
+                        navText: ['<i class="icon-left"></i>', '<i class="icon-right"></i>'],
+                        captions: true,
+                        captionSelector: 'self',
+                        captionType: 'data',
+                        captionsData: 'caption',
+                        close: true,
+                        closeText: '<i class="icon-cross"></i>',
+                        showCounter: true,
+                        disableScroll: false,
+                        animationSpeed: 200
+                    });
+
+                    isLightBoxStarted = true;
+
+                    $gallery.find('.b-gallery__thumb').bind('click', method.startLightBox); //подключаем обработку клика на изображение в главном слайдере
+                };
+            };
+
+            method.startLightBox = function () {//открываем в лайтбоксе линк с соотв.индексом
+                var index = $(this).parent('li').index(),//находим индекс
+                        $el = $lightbox.children('li').eq(index).find('a');
+                lightbox.open($el);
+            };
+
+            method.destroyLightBox = function () {//убиваем лайтбокс
+                if (isLightBoxStarted) {
+                    lightbox.destroy();
+                    isLightBoxStarted = false;
+                    $gallery.find('.b-gallery__thumb').unbind('click', method.startLightBox);//отключили отслеживание клика по изображению
+                    $lightbox.children('li').remove();//очистили список
+                }
+            };
+
+            method.reloadLightBox = function (link) {//загружаем новый контент в лайтбокс
+                $lightbox.load(link, function () {
+                    method.initLightBox();
+                });
+            };
+
+            //-- Запускаем все это:
             if (list.length) {//запускаем главный слайдер галереи
                 method.startGallery();
             };
-            if ($album.length) {
+            if ($lightbox.length) {//подключаем лайтбокс
+                method.initLightBox();
+            };
+            if ($album.length) {//запускаем слайдер альбомов
                 method.startAlbumSlider();
             };
 
-            $album.on('click', '[data-load]', function () {//клик по альбому
+            $album.on('click', '[data-load]', function () {//Переключение на другой альбом
                 var $el = $(this),
-                    link = $el.data('load');
-                if ($el.hasClass('current')) {
+                    link = $el.data('load'),
+                    lightbox_link = $el.data('lightbox');
+
+                if ($el.hasClass('current')) {//клик по текущему альбому
                     return false;
-                } else {
+                } else {//клик по новому альбому
                     $album_item.removeClass('current');
                     $el.addClass('current');
                     method.changeGalleryTitle($el);//изменили название текущего альбома
                     method.stopGallery();//остановили слайдер галереи, удалили контент
+                    method.destroyLightBox();//вырубили лайтбокс, удалили контент
                     method.loadGallery(link);//загрузили новый контент в галерею и перезапустили слайдер
+                    method.reloadLightBox(lightbox_link);//загрузили новый контент в лайтбокс
                 };
             });
         };

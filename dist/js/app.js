@@ -122,6 +122,14 @@ https://github.com/imakewebthings/waypoints/blog/master/licenses.txt
 
 })(window.jQuery || window.Zepto);
 
+/*
+    SimpleLightBox
+	By André Rinas, http://andreknieriem.de/simple-lightbox/
+	Available for use under the MIT License
+*/
+!function (e, t, n, i) { "use strict"; e.fn.simpleLightbox = function (i) { var i = e.extend({ overlay: !0, spinner: !0, nav: !0, navText: ["&lsaquo;", "&rsaquo;"], captions: !0, captionDelay: 0, captionSelector: "img", captionType: "attr", captionsData: "title", captionPosition: "bottom", close: !0, closeText: "×", showCounter: !0, fileExt: "png|jpg|jpeg|gif", animationSlide: !0, animationSpeed: 250, preloading: !0, enableKeyboard: !0, loop: !0, docClose: !0, swipeTolerance: 50, className: "simple-lightbox", widthRatio: .8, heightRatio: .9, disableRightClick: !1, disableScroll: !0, alertError: !0, alertErrorMessage: "Image not found, next image will be loaded" }, i), a = (t.navigator.pointerEnabled || t.navigator.msPointerEnabled, 0), o = e(), s = function () { var e = n.body || n.documentElement, e = e.style; return "" == e.WebkitTransition ? "-webkit-" : "" == e.MozTransition ? "-moz-" : "" == e.OTransition ? "-o-" : "" == e.transition ? "" : !1 }, l = !1, r = [], d = this, s = s(), p = s !== !1 ? !0 : !1, c = "simplelb", g = e("<div>").addClass("sl-overlay"), h = e("<button>").addClass("sl-close").html(i.closeText), f = e("<div>").addClass("sl-spinner").html("<div></div>"), u = e("<div>").addClass("sl-navigation").html('<button class="sl-prev">' + i.navText[0] + '</button><button class="sl-next">' + i.navText[1] + "</button>"), m = e("<div>").addClass("sl-counter").html('<span class="sl-current"></span>/<span class="sl-total"></span>'), v = !1, x = 0, b = e(), y = e("<div>").addClass("sl-caption pos-" + i.captionPosition), w = e("<div>").addClass("sl-wrapper").addClass(i.className).html('<div class="sl-image"></div>'), E = function (t) { return i.fileExt ? "a" == e(t).prop("tagName").toLowerCase() && new RegExp(".(" + i.fileExt + ")$", "i").test(e(t).attr("href")) : !0 }, T = function () { b = e(".sl-image"), i.close && h.appendTo(w), i.showCounter && d.length > 1 && (m.appendTo(w), m.find(".sl-total").text(d.length)), i.nav && u.appendTo(w), i.spinner && f.appendTo(w) }, S = function (t) { t.trigger(e.Event("show.simplelightbox")), i.disableScroll && R("hide"), w.appendTo("body"), i.overlay && g.appendTo(e("body")), v = !0, x = d.index(t), o = e("<img/>").hide().attr("src", t.attr("href")), -1 == r.indexOf(t.attr("href")) && r.push(t.attr("href")), e(".sl-image").html("").attr("style", ""), o.appendTo(e(".sl-image")), g.fadeIn("fast"), e(".sl-close").fadeIn("fast"), f.show(), u.fadeIn("fast"), e(".sl-wrapper .sl-counter .sl-current").text(x + 1), m.fadeIn("fast"), C(), i.preloading && q(), setTimeout(function () { t.trigger(e.Event("shown.simplelightbox")) }, i.animationSpeed) }, C = function (n) { if (o.length) { var a = new Image, s = e(t).width() * i.widthRatio, c = e(t).height() * i.heightRatio; a.src = o.attr("src"), e(a).bind("error", function (t) { return d.eq(x).trigger(e.Event("error.simplelightbox")), v = !1, l = !0, f.hide(), i.alertError ? (alert(i.alertErrorMessage), void D(1 == n || -1 == n ? n : 1)) : void 0 }), a.onload = function () { "undefined" != typeof n && d.eq(x).trigger(e.Event("changed.simplelightbox")).trigger(e.Event((1 === n ? "nextDone" : "prevDone") + ".simplelightbox")), -1 == r.indexOf(o.attr("src")) && r.push(o.attr("src")); var g = a.width, h = a.height; if (g > s || h > c) { var u = g / h > s / c ? g / s : h / c; g /= u, h /= u } e(".sl-image").css({ top: (e(t).height() - h) / 2 + "px", left: (e(t).width() - g) / 2 + "px" }), f.hide(), o.css({ width: g + "px", height: h + "px" }).fadeIn("fast"), l = !0; var m = "self" == i.captionSelector ? d.eq(x) : d.eq(x).find(i.captionSelector); if ("data" == i.captionType) var b = m.data(i.captionsData); else if ("text" == i.captionType) var b = m.html(); else var b = m.prop(i.captionsData); if (i.loop || (0 == x && e(".sl-prev").hide(), x >= d.length - 1 && e(".sl-next").hide(), x > 0 && x < d.length - 1 && e(".sl-prev, .sl-next").show()), 1 == d.length && e(".sl-prev, .sl-next").hide(), 1 == n || -1 == n) { var y = { opacity: 1 }; i.animationSlide && (p ? (I(0, 100 * n + "px"), setTimeout(function () { I(i.animationSpeed / 1e3, "0px"), 50 })) : y.left = parseInt(e(".sl-image").css("left")) + 100 * n + "px"), e(".sl-image").animate(y, i.animationSpeed, function () { v = !1, k(b) }) } else v = !1, k(b) } } }, k = function (t) { "" != t && "undefined" != typeof t && i.captions && y.html(t).hide().appendTo(e(".sl-image")).delay(i.captionDelay).fadeIn("fast") }, I = function (t, n) { var i = {}; i[s + "transform"] = "translateX(" + n + ")", i[s + "transition"] = s + "transform " + t + "s linear", e(".sl-image").css(i) }, q = function () { var t = 0 > x + 1 ? d.length - 1 : x + 1 >= d.length - 1 ? 0 : x + 1, n = 0 > x - 1 ? d.length - 1 : x - 1 >= d.length - 1 ? 0 : x - 1; e("<img />").attr("src", d.eq(t).attr("href")).load(function () { -1 == r.indexOf(e(this).attr("src")) && r.push(e(this).attr("src")), d.eq(x).trigger(e.Event("nextImageLoaded.simplelightbox")) }), e("<img />").attr("src", d.eq(n).attr("href")).load(function () { -1 == r.indexOf(e(this).attr("src")) && r.push(e(this).attr("src")), d.eq(x).trigger(e.Event("prevImageLoaded.simplelightbox")) }) }, D = function (t) { d.eq(x).trigger(e.Event("change.simplelightbox")).trigger(e.Event((1 === t ? "next" : "prev") + ".simplelightbox")); var n = x + t; if (!(v || (0 > n || n >= d.length) && 0 == i.loop)) { x = 0 > n ? d.length - 1 : n > d.length - 1 ? 0 : n, e(".sl-wrapper .sl-counter .sl-current").text(x + 1); var s = { opacity: 0 }; i.animationSlide && (p ? I(i.animationSpeed / 1e3, -100 * t - a + "px") : s.left = parseInt(e(".sl-image").css("left")) + -100 * t + "px"), e(".sl-image").animate(s, i.animationSpeed, function () { setTimeout(function () { var n = d.eq(x); o.attr("src", n.attr("href")), -1 == r.indexOf(n.attr("href")) && f.show(), e(".sl-caption").remove(), C(t), i.preloading && q() }, 100) }) } }, M = function () { if (!v) { var t = d.eq(x), n = !1; t.trigger(e.Event("close.simplelightbox")), e(".sl-image img, .sl-overlay, .sl-close, .sl-navigation, .sl-image .sl-caption, .sl-counter").fadeOut("fast", function () { i.disableScroll && R("show"), e(".sl-wrapper, .sl-overlay").remove(), n || t.trigger(e.Event("closed.simplelightbox")), n = !0 }), o = e(), l = !1, v = !1 } }, R = function (i) { if ("hide" == i) { var a = t.innerWidth; if (!a) { var o = n.documentElement.getBoundingClientRect(); a = o.right - Math.abs(o.left) } if (n.body.clientWidth < a) { var s = n.createElement("div"), l = parseInt(e("body").css("padding-right"), 10); s.className = "sl-scrollbar-measure", e("body").append(s); var r = s.offsetWidth - s.clientWidth; e(n.body)[0].removeChild(s), e("body").data("padding", l), r > 0 && e("body").css({ "padding-right": l + r, overflow: "hidden" }) } } else e("body").css({ "padding-right": e("body").data("padding"), overflow: "visible" }) }; T(), e(t).on("resize", C), d.on("click." + c, function (t) { if (E(this)) { if (t.preventDefault(), v) return !1; S(e(this)) } }), e(n).on("click", ".sl-close", function (e) { e.preventDefault(), l && M() }), e(n).click(function (t) { l && i.docClose && 0 == e(t.target).closest(".sl-image").length && 0 == e(t.target).closest(".sl-navigation").length && M() }), i.disableRightClick && e(n).on("contextmenu", ".sl-image img", function (e) { return !1 }), e(n).on("click", ".sl-navigation button", function (t) { t.preventDefault(), a = 0, D(e(this).hasClass("sl-next") ? 1 : -1) }), i.enableKeyboard && e(n).on("keyup." + c, function (e) { if (e.preventDefault(), a = 0, l) { var t = e.keyCode; 27 == t && M(), (37 == t || 39 == e.keyCode) && D(39 == e.keyCode ? 1 : -1) } }); var O = 0, P = 0, W = !1, X = 0; return e(n).on("touchstart mousedown pointerdown MSPointerDown", ".sl-image", function (e) { return W ? !0 : (p && (X = parseInt(b.css("left"))), W = !0, O = e.originalEvent.pageX || e.originalEvent.touches[0].pageX, !1) }).on("touchmove mousemove pointermove MSPointerMove", function (e) { return W ? (e.preventDefault(), P = e.originalEvent.pageX || e.originalEvent.touches[0].pageX, a = O - P, void (i.animationSlide && (p ? I(0, -a + "px") : b.css("left", X - a + "px")))) : !0 }).on("touchend mouseup touchcancel pointerup pointercancel MSPointerUp MSPointerCancel", function (e) { W && (W = !1, Math.abs(a) > i.swipeTolerance ? D(a > 0 ? 1 : -1) : i.animationSlide && (p ? I(i.animationSpeed / 1e3, "0px") : b.animate({ left: X + "px" }, i.animationSpeed / 2))) }), this.open = function (t) { t = t || e(this[0]), S(t) }, this.next = function () { D(1) }, this.prev = function () { D(-1) }, this.close = function () { M() }, this.destroy = function () { e(n).unbind("click." + c).unbind("keyup." + c), M(), e(".sl-overlay, .sl-wrapper").remove() }, this } }(jQuery, window, document);
+
+
 // Application Scripts:
 
 // Переключатель языка
@@ -403,11 +411,15 @@ jQuery(document).ready(function ($) {
                 $album = $gallery.parents('.b-gallery').find('.js-album-slider'),//альбом галереи
                 $album_item = $album.find('.b-album__thumb'),
                 $title = $gallery.parents('.b-gallery').find('.js-gallery-name'),//заголовок текущего альбома
-                isGalleryLoad = false,//флаг
-                isGalleryImagesLoaded = false, //флаг
+                $lightbox = $gallery.parents('.b-gallery').find('.js-gallery-large'), //список с ссылками на крупные изображения,
+                lightbox, //объект лайтбокса
+                isGalleryLoad = false,//флаги состояний
+                isGalleryImagesLoaded = false,
+                isLightBoxStarted = false,
                 method = {};
 
-            method.startGallery = function () {
+            //--Методы Галереи--//
+            method.startGallery = function () {//запускаем главный слайдер галереи
                 if (!isGalleryLoad) {
                     $gallery.bxSlider({
                         auto: false,
@@ -441,13 +453,13 @@ jQuery(document).ready(function ($) {
                 };
             };
 
-            method.loadGallery = function (link) {//загрузка нового контента в слайдер Галереи
+            method.loadGallery = function (link) {//загрузка нового контента в главный слайдер Галереи
                 $gallery.load(link, function () {
                     method.startGallery();
                 });
             };
 
-            method.show2GalleryImages = function () {//после загрузки слайдера галереи загрузим первые 2 картинки
+            method.show2GalleryImages = function () {//после загрузки главного слайдера галереи загрузим первые 2 картинки
                 for (var i = 0; i < 2; i++) {
                     var $el = $gallery.children('li').eq(i).find('img[data-src]');
                     if ($el.length) {
@@ -456,7 +468,7 @@ jQuery(document).ready(function ($) {
                 };
             };
 
-            method.showAllGalleryImages = function () {//после того как начали скроллить слайдер галереи, дозагрузим остальные изображения
+            method.showAllGalleryImages = function () {//после того как начали скроллить главный слайдер галереи, дозагрузим остальные изображения
                 $gallery.children('li').each(function () {
                     var $el = $(this).find('img[data-src]');
                     if (!$el.hasClass('loaded')) {
@@ -474,6 +486,7 @@ jQuery(document).ready(function ($) {
                 };
             };
 
+            //--Методы слайдера альбомов--//
             method.startAlbumSlider = function () {//запускаем слайдер альбомов
                 $album.bxSlider({
                     mode: 'vertical',
@@ -484,8 +497,10 @@ jQuery(document).ready(function ($) {
                     minSlides: 3,
                     maxSlides: 3,
                     moveSlides: 1,
+                    infiniteLoop: false,
+                    hideControlOnEnd: true,
                     onSliderLoad: function (currentIndex) {//добавим к первому элементу класс current
-                        $album.children('li').eq(currentIndex + 3).find('.b-album__thumb').addClass('current');
+                        $album.children('li').eq(currentIndex).find('.b-album__thumb').addClass('current');
                     },
                 });
             };
@@ -497,24 +512,75 @@ jQuery(document).ready(function ($) {
                 $title.find('.b-gallery-name__subtitle').text(subtitle);
             };
 
+            //--Методы Лайтбокса--//
+            method.initLightBox = function () {//по клику на изображение в главной галерее будем открывать картинку в лайтбоксе
+                if (!isLightBoxStarted) {
+                    lightbox = $lightbox.find('a').simpleLightbox({
+                        navText: ['<i class="icon-left"></i>', '<i class="icon-right"></i>'],
+                        captions: true,
+                        captionSelector: 'self',
+                        captionType: 'data',
+                        captionsData: 'caption',
+                        close: true,
+                        closeText: '<i class="icon-cross"></i>',
+                        showCounter: true,
+                        disableScroll: false,
+                        animationSpeed: 200
+                    });
+
+                    isLightBoxStarted = true;
+
+                    $gallery.find('.b-gallery__thumb').bind('click', method.startLightBox); //подключаем обработку клика на изображение в главном слайдере
+                };
+            };
+
+            method.startLightBox = function () {//открываем в лайтбоксе линк с соотв.индексом
+                var index = $(this).parent('li').index(),//находим индекс
+                        $el = $lightbox.children('li').eq(index).find('a');
+                lightbox.open($el);
+            };
+
+            method.destroyLightBox = function () {//убиваем лайтбокс
+                if (isLightBoxStarted) {
+                    lightbox.destroy();
+                    isLightBoxStarted = false;
+                    $gallery.find('.b-gallery__thumb').unbind('click', method.startLightBox);//отключили отслеживание клика по изображению
+                    $lightbox.children('li').remove();//очистили список
+                }
+            };
+
+            method.reloadLightBox = function (link) {//загружаем новый контент в лайтбокс
+                $lightbox.load(link, function () {
+                    method.initLightBox();
+                });
+            };
+
+            //-- Запускаем все это:
             if (list.length) {//запускаем главный слайдер галереи
                 method.startGallery();
             };
-            if ($album.length) {
+            if ($lightbox.length) {//подключаем лайтбокс
+                method.initLightBox();
+            };
+            if ($album.length) {//запускаем слайдер альбомов
                 method.startAlbumSlider();
             };
 
-            $album.on('click', '[data-load]', function () {//клик по альбому
+            $album.on('click', '[data-load]', function () {//Переключение на другой альбом
                 var $el = $(this),
-                    link = $el.data('load');
-                if ($el.hasClass('current')) {
+                    link = $el.data('load'),
+                    lightbox_link = $el.data('lightbox');
+
+                if ($el.hasClass('current')) {//клик по текущему альбому
                     return false;
-                } else {
+                } else {//клик по новому альбому
                     $album_item.removeClass('current');
                     $el.addClass('current');
                     method.changeGalleryTitle($el);//изменили название текущего альбома
                     method.stopGallery();//остановили слайдер галереи, удалили контент
+                    method.destroyLightBox();//вырубили лайтбокс, удалили контент
                     method.loadGallery(link);//загрузили новый контент в галерею и перезапустили слайдер
+                    method.reloadLightBox(lightbox_link);//загрузили новый контент в лайтбокс
                 };
             });
         };

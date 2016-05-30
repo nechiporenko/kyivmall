@@ -7,15 +7,24 @@
 
 img.g-full-width{clear:both;display:block;width:100%;height:auto;margin:0 0 0 0;}
 
-.g-img-left{
-    float:left;
-    @include px2rem(margin, 0 20px 9px 0);
+
+.g-img-left,
+.g-img-right{
+    display:block;
+    margin:0 0 9px 0;
     @extend .g-max-full-width;
 }
-.g-img-right{
-    float:right;
-    @include px2rem(margin, 0 0 20px 9px);
-    @extend .g-max-full-width;
+
+@include media($small){
+    .g-img-left{
+        float:left;
+        margin:0 20px 9px 0;
+    }
+
+    .g-img-right{
+        float:right;
+        margin:0 0 9px 20px;
+    }
 }
 
 .g-full-width {
