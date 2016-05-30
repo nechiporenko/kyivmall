@@ -16,17 +16,28 @@
   z-index: 1000;
 
   button {
+    display:inline-block;
+    vertical-align:middle;
     border: 0 none;
-    background: transparent;
+    background: none;
     font-size: 24px;
     padding: 0;
+    margin:0;
     cursor: pointer;
     @include transition-property(opacity, transform);
     @include transition-duration(.3s);
 
+    [class^="icon-"], [class*=" icon-"]{
+          margin:0;
+      }
+
     &:hover {
       opacity: 0.7;
-      @include transform(scale(1.4));
+      @include transform(scale(1.2));
+    }
+
+    &:active{
+        @include transform(scale(1.2) translateY(5px));
     }
   }
   
@@ -58,10 +69,10 @@
     button {
       position: fixed;
       top: 50%;
-      margin-top: -10px;
-      height: 30px;
-      width: 30px;
-      line-height: 30px;
+      margin-top: -20px;
+      height: 40px;
+      width: 40px;
+      line-height: 40px;
       display: block;
       z-index: 3015;
       font-family: arial sans-serif;
@@ -70,12 +81,12 @@
       outline:0;
 
       &.sl-next {
-        right: 40px;
+        right: 10px;
         text-align:right;
       }
       
       &.sl-prev {
-        left: 20px;
+        left: 10px;
         text-align:left;
       }
     }
