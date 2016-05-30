@@ -526,20 +526,20 @@ jQuery(document).ready(function ($) {
                         animationSpeed: 200
                     });
                     isLightBoxStarted = true;
-                    $gallery.find('.b-gallery__thumb').bind('click', method.openLightBox); //подключаем обработку клика на изображение в главном слайдере
                 };
-            };
 
-            method.openLightBox = function () {//открываем в лайтбоксе линк с соотв.индексом
-                var index = $(this).parent('li').index(),//находим индекс
+                $gallery.on('click', '.b-gallery__thumb', function () {
+                    if (isLightBoxStarted) {
+                        var index = $(this).parent('li').index(),//находим индекс
                         $el = $lightbox.children('li').eq(index).find('a');
-                lightbox.open($el);
+                        lightbox.open($el);//открываем в лайтбоксе
+                    };
+                });
             };
 
 
             method.reloadLightBox = function (link) {//загружаем новый контент в лайтбокс
                 if (isLightBoxStarted) {
-                    $gallery.find('.b-gallery__thumb').unbind('click', method.openLightBox);//отключили отслеживание клика по изображению
                     lightbox.destroy();
                     lightbox = {};
                     isLightBoxStarted = false;
