@@ -280,7 +280,7 @@ jQuery(document).ready(function ($) {
                 $album_item = $album.find('.b-album__thumb'),
                 $title = $gallery.parents('.b-gallery').find('.js-gallery-name'),//заголовок текущего альбома
                 $lightbox = $gallery.parents('.b-gallery').find('.js-gallery-large'), //список с ссылками на крупные изображения,
-                lightbox, //объект лайтбокса
+                lightbox = {}, //объект лайтбокса
                 isGalleryLoad = false,//флаги состояний
                 isGalleryImagesLoaded = false,
                 isLightBoxStarted = false,
@@ -312,19 +312,17 @@ jQuery(document).ready(function ($) {
                 };
             };
 
-            method.stopGallery = function () {//убиваем главный слайдер галереи
-                if (isGalleryLoad) {
+            method.reloadGallery = function (link) {//перезагрузка контента галереи
+                if (isGalleryLoad) {//убиваем главный слайдер галереи
                     $gallery.destroySlider();
                     $gallery.find('.b-gallery__item').remove();
                     isGalleryLoad = false;
                     isGalleryImagesLoaded = false;
-                };
-            };
 
-            method.loadGallery = function (link) {//загрузка нового контента в главный слайдер Галереи
-                $gallery.load(link, function () {
-                    method.startGallery();
-                });
+                    $gallery.load(link, function () {//загрузка нового контента в главный слайдер Галереи
+                        method.startGallery();
+                    });
+                };
             };
 
             method.show2GalleryImages = function () {//после загрузки главного слайдера галереи загрузим первые 2 картинки
@@ -395,32 +393,29 @@ jQuery(document).ready(function ($) {
                         disableScroll: false,
                         animationSpeed: 200
                     });
-
                     isLightBoxStarted = true;
-
-                    $gallery.find('.b-gallery__thumb').bind('click', method.startLightBox); //подключаем обработку клика на изображение в главном слайдере
+                    $gallery.find('.b-gallery__thumb').bind('click', method.openLightBox); //подключаем обработку клика на изображение в главном слайдере
                 };
             };
 
-            method.startLightBox = function () {//открываем в лайтбоксе линк с соотв.индексом
+            method.openLightBox = function () {//открываем в лайтбоксе линк с соотв.индексом
                 var index = $(this).parent('li').index(),//находим индекс
                         $el = $lightbox.children('li').eq(index).find('a');
                 lightbox.open($el);
             };
 
-            method.destroyLightBox = function () {//убиваем лайтбокс
-                if (isLightBoxStarted) {
-                    lightbox.destroy();
-                    isLightBoxStarted = false;
-                    $gallery.find('.b-gallery__thumb').unbind('click', method.startLightBox);//отключили отслеживание клика по изображению
-                    $lightbox.children('li').remove();//очистили список
-                }
-            };
 
             method.reloadLightBox = function (link) {//загружаем новый контент в лайтбокс
-                $lightbox.load(link, function () {
-                    method.initLightBox();
-                });
+                if (isLightBoxStarted) {
+                    $gallery.find('.b-gallery__thumb').unbind('click', method.openLightBox);//отключили отслеживание клика по изображению
+                    lightbox.destroy();
+                    lightbox = {};
+                    isLightBoxStarted = false;
+                    $lightbox.children('li').remove();//очистили список
+                    $lightbox.load(link, function () {
+                        method.initLightBox();
+                    });
+                };
             };
 
             //-- Запускаем все это:
@@ -445,9 +440,7 @@ jQuery(document).ready(function ($) {
                     $album_item.removeClass('current');
                     $el.addClass('current');
                     method.changeGalleryTitle($el);//изменили название текущего альбома
-                    method.stopGallery();//остановили слайдер галереи, удалили контент
-                    method.destroyLightBox();//вырубили лайтбокс, удалили контент
-                    method.loadGallery(link);//загрузили новый контент в галерею и перезапустили слайдер
+                    method.reloadGallery(link); //перезагрузили главный слайдер галереи (заменили контент)
                     method.reloadLightBox(lightbox_link);//загрузили новый контент в лайтбокс
                 };
             });
