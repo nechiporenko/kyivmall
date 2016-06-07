@@ -419,6 +419,14 @@ jQuery(document).ready(function ($) {
                 method = {};
 
             //--Методы Галереи--//
+            method.preLoadGallery = function (link) {//первая загрузка контента в Главный слайдер галереи
+                if (!isGalleryLoad) {
+                    $gallery.load(link, function () {
+                        method.startGallery();
+                    });
+                };
+            };
+
             method.startGallery = function () {//запускаем главный слайдер галереи
                 if (!isGalleryLoad) {
                     $gallery.bxSlider({
@@ -498,7 +506,12 @@ jQuery(document).ready(function ($) {
                     infiniteLoop: false,
                     hideControlOnEnd: true,
                     onSliderLoad: function (currentIndex) {//добавим к первому элементу класс current
-                        $album.children('li').eq(currentIndex).find('.b-album__thumb').addClass('current');
+                        var $el = $album.children('li').eq(currentIndex).find('.b-album__thumb').addClass('current'),
+                            gallery_link = $el.data('load'),
+                            lightbox_link = $el.data('lightbox');
+                        method.changeGalleryTitle($el); //передадим заголовки первого альбома
+                        method.preLoadGallery(gallery_link); //загрузили разметку слайдера первого альбома
+                        method.preLoadLightbox(lightbox_link); //загрузили разметку первого альбома для просмотра в лайтбоксе
                     },
                 });
             };
@@ -511,6 +524,14 @@ jQuery(document).ready(function ($) {
             };
 
             //--Методы Лайтбокса--//
+            method.preLoadLightbox = function (link) {//загрузка контента первого альбома для просмотра в лайтбоксе
+                if (!isLightBoxStarted) {
+                    $lightbox.load(link, function () {
+                        method.initLightBox();
+                    });
+                };
+            };
+
             method.initLightBox = function () {//по клику на изображение в главной галерее будем открывать картинку в лайтбоксе
                 if (!isLightBoxStarted) {
                     lightbox = $lightbox.find('a').simpleLightbox({
@@ -537,7 +558,6 @@ jQuery(document).ready(function ($) {
                 });
             };
 
-
             method.reloadLightBox = function (link) {//загружаем новый контент в лайтбокс
                 if (isLightBoxStarted) {
                     lightbox.destroy();
@@ -551,15 +571,10 @@ jQuery(document).ready(function ($) {
             };
 
             //-- Запускаем все это:
-            if (list.length) {//запускаем главный слайдер галереи
-                method.startGallery();
-            };
-            if ($lightbox.length) {//подключаем лайтбокс
-                method.initLightBox();
-            };
             if ($album.length) {//запускаем слайдер альбомов
                 method.startAlbumSlider();
             };
+
 
             $album.on('click', '[data-load]', function () {//Переключение на другой альбом
                 var $el = $(this),
