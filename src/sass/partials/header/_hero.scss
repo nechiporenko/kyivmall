@@ -4,43 +4,38 @@
     position:absolute;
     top:0; left:0; right:0; bottom:0;
     background-color:#71645a;
-    background-image:url(../img/hero/hero-xs.jpg);
     background-position:center top;
     background-repeat:no-repeat;
     box-sizing:border-box;
 
-    @include media($desktop){
-        background-image:url(../img/hero/hero-xl.jpg);
-    }
-}
-
-.b-header__slider{
-    left:0;
-    width:100%;
-    @extend .g-valign;
-
-    @include media($desktop){
-        padding-top:65px;
+    .bx-wrapper,
+    .bx-viewport{
+        height:100% !important;
     }
 }
 
 .h-hero{
     @extend .g-clearlist;
     @extend .g-clearfix;
-}
-
-.js .h-hero{
-    visibility:hidden;
+    height:100% !important;
 }
 
 .h-hero__item{
     @extend .g-column;
-    padding:30px 0;
-    text-align:center;
+    height:100% !important;
+    position:relative;
+}
+
+.h-hero__wrapper{
+    margin:0;
+    height:100%;
+    @include display(flex);
+    @include align-items(center);
 }
 
 .h-hero__inner{
     padding: 0 50px; //стрелки слайдера справа и слева
+    width:100%;
     max-width:860px;
     margin:0 auto;
     box-sizing:border-box;
@@ -50,7 +45,8 @@
     font-family:$font-light;
     text-align:center;
     position:relative;
-
+    z-index:1;
+    
     &:before{ //подложка
         content:'';
         display:block;
@@ -60,29 +56,97 @@
         box-shadow:0 0 40px 30px rgba(#000, .12);
         z-index:-1;
     }
-
-    @include media($tablet){
-        font-size:rem(16px);
-    }
-
-    @include media($desktop){
-        @include font-size(18px);
-    }
-
-    @include media($large){
-        padding:0;
-    }
 }
 
 .h-hero__title{
     @extend .g-title;
     color:#fff;
+}
+//изображения
+.h-hero__img{
+    position:absolute;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+}
 
-    @include media($tablet){
+.h-hero__img__xs,
+.h-hero__img__xl{
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+.h-hero__img--xl{
+    display:none;
+}
+
+//навигация
+.h-hero__nav{
+    @extend .h-hero__img;
+
+    .g-container{
+        position:relative;
+        height:100%;
+    }
+}
+
+.h-hero__prev a{
+    left:0;
+}
+
+.h-hero__next a{
+    right:0;
+}
+
+
+.no-flexbox{
+    .h-hero__wrapper{
+        display:table;
+        width:100%;
+        max-width:860px;
+        margin:0 auto;
+        table-layout:fixed;
+    }
+    .h-hero__inner{
+        display:table-cell;
+        vertical-align:middle;
+
+        &:before{
+            display:none;
+        }
+    }
+}
+
+
+@include media($tablet){
+    .h-hero__inner{
+        font-size:rem(16px);
+        width:750px;
+    }
+    .h-hero__title{
         font-size:rem(32px);
     }
+}
 
-    @include media($desktop){
+@include media($desktop){
+    .h-hero__inner{
+        @include font-size(18px);
+        width:970px;
+    }
+    .h-hero__title{
         @include font-size(48px);
+    }
+    .h-hero__img--xs{
+        display:none;
+    }
+    .h-hero__img--xl{
+        display:block;
+    }
+}
+
+@include media($large){
+    .h-hero__inner{
+        padding:0;
+        width:100%;
     }
 }

@@ -10,6 +10,9 @@
 // Фотогалерея
 // Вкладки
 // Модальное окно
+// Покажем новость в модальном окне
+// Слайдер новостей
+// Гугл карта
 // Маска для телефонного номера
 // Если браузер не знает о плейсхолдерах в формах
 
@@ -256,17 +259,29 @@ jQuery(document).ready(function ($) {
     //---------------------------------------------------------------------------------------
     (function () {
         var $slider = $('.js-hero');
+
+        function addImages() {
+            var count = $slider.children('li').length;
+            for (var i = 1; i < count; i++) {//для первого элемента вывели изображенния скриптом на странице, начинаем цикл со второго
+                var $el = $slider.children('li').eq(i),
+                    $elXS = $el.find('.h-hero__img--xs'),
+                    $elXL = $el.find('.h-hero__img--xl');
+                $elXS.css('background-image', 'url(' + heroSlider.imgXS[i] + ')');
+                $elXL.css('background-image', 'url(' + heroSlider.imgXL[i] + ')');
+            };
+        }
+
         $slider.bxSlider({
             controls: true,
             mode: 'fade',
             nextText: '<i class="icon-right"></i>',
             prevText: '<i class="icon-left"></i>',
+            nextSelector: $slider.parent().find('.h-hero__next'),
+            prevSelector: $slider.parent().find('.h-hero__prev'),
             pager: false,
             auto: true,
             pause: 12000,
-            onSliderLoad: function () {
-                $slider.css('visibility', 'visible');//покажем контент слайдера после загрузки
-            }
+            onSliderLoad: addImages
         });
     })();
 
@@ -551,6 +566,7 @@ jQuery(document).ready(function ($) {
         return method;
     }());
 
+
     //
     // Покажем новость в модальном окне
     //---------------------------------------------------------------------------------------
@@ -565,6 +581,119 @@ jQuery(document).ready(function ($) {
                 showModal.open(modal);
             });
         });
+    })();
+
+    //
+    // Слайдер новостей
+    //---------------------------------------------------------------------------------------
+    (function () {
+        var $slider = $('.js-post-slider'),
+            rtime, //переменные для пересчета ресайза окна с задержкой delta - будем показывать разное кол-во слайдов на разных разрешениях
+            timeout = false,
+            delta = 200,
+            isImagesLoaded = false, //при загрузке слайдера покажем 2 первые фотки, остальные - после первой прокрутки слайдера
+            method = {};
+
+        method.getSliderSettings = function () {
+            var setting,
+                    settings1 = {
+                        maxSlides: 1,
+                        minSlides: 1,
+                        slideMargin: 50,
+                    },
+                    settings2 = {
+                        maxSlides: 2,
+                        minSlides: 2,
+                        slideMargin: 50,
+                    },
+                    settings3 = {
+                        maxSlides: 2,
+                        minSlides: 2,
+                        slideMargin: 90,
+                    },
+                    common = {
+                        slideWidth: 360,
+                        moveSlides: 1,
+                        auto: false,
+                        infiniteLoop: false,
+                        hideControlOnEnd: true,
+                        useCSS: false,
+                        nextText: '<i class="icon-right"></i>',
+                        prevText: '<i class="icon-left"></i>',
+                        pager: false,
+                        onSlideBefore: function () {//если картинки не загружены - загружаем
+                            if (!isImagesLoaded) {
+                                method.showAllImages();
+                            };
+                        }
+                    },
+                    winW = $.viewportW(); //ширина окна
+
+            if (winW < 768) {
+                setting = $.extend(settings1, common);
+            };           
+            if (winW >= 768 && winW < 1200) {
+                setting = $.extend(settings2, common);
+            };
+            if (winW >= 1200) {
+                setting = $.extend(settings3, common);
+            }
+            return setting;
+        };
+
+        method.reloadSliderSettings = function () {
+            $slider.reloadSlider($.extend(method.getSliderSettings(), { startSlide: $slider.getCurrentSlide() }));
+        };
+
+
+        method.endResize = function () {
+            if (new Date() - rtime < delta) {
+                setTimeout(method.endResize, delta);
+            } else {
+                timeout = false;
+                //ресайз окончен - пересчитываем
+                method.reloadSliderSettings();
+            }
+        };
+
+        method.startResize = function () {
+            rtime = new Date();
+            if (timeout === false) {
+                timeout = true;
+                setTimeout(method.endResize, delta);
+            }
+        };
+
+        method.show2images = function () {//при загрузке слайдера, сперва загрузим первые 2 картинки
+            for (var i = 0; i < 2; i++) {
+                var $img = $slider.children('li').eq(i).find('.js-slider-img');
+                if ($img.length) {
+                    method.loadImage($img);
+                };
+            };
+        };
+
+        method.showAllImages = function () {//дозагрузим остальные картинки в слайдер после первой прокрутки
+            isImagesLoaded = true;
+            $slider.children('li').each(function () {
+                var $img = $(this).find('.js-slider-img');
+                if ($img.length) {
+                    method.loadImage($img);
+                };
+            });
+        };
+
+        method.loadImage = function (el) {//загрузим изображение в слайдер
+            var source = el.data('src');
+            if (source != '') {
+                el.attr('src', source);
+                el.removeClass('js-slider-img');
+            };
+        };
+
+        method.show2images();
+        $slider.bxSlider(method.getSliderSettings());//запускаем слайдер
+        $(window).bind('resize', method.startResize);//пересчитываем кол-во видимых элементов при ресайзе окна с задержкой .2с
     })();
 
     //

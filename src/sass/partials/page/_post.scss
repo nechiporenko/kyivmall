@@ -5,11 +5,7 @@
     margin:0 auto 3*$project-line-height;
 }
 
-.b-post--last{
-    @include media($large){
-        @include transform(translateX(-52px));
-    }
-}
+
 .b-post__thumb{
     margin-bottom:20px;
     padding:25px 0 0 25px;
@@ -128,4 +124,47 @@
     .b-post__month{
         @include font-size(12px);
     }
+}
+
+
+/*Post Slider*/
+.b-slider{
+    @extend .g-container__inner;
+    .bx-wrapper{
+        .bx-controls-direction a{
+            margin-top:0;
+            top:95px;
+        }
+        .bx-prev {
+		    left: 0;
+	    }
+	    .bx-next {
+		    right: 0;
+	    }
+    }
+}
+
+@include media($desktop){
+    .b-slider{
+        .bx-wrapper{
+            .bx-next {
+		        right: -25px;
+	        }
+        }
+    }
+}
+
+@include media($large){
+    .b-slider{
+        @include transform(translateX(-25px));
+    }
+}
+
+.b-slider__list{
+    @extend .g-clearlist;
+    @extend .g-clearfix;
+}
+
+.b-slider__item{
+    @extend .g-column;
 }

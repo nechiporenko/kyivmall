@@ -1,7 +1,7 @@
 ﻿@import "../../modules/_base.scss";
 .b-action{
     position:relative;
-    z-index:10; //на планшете (768) поднимем поверх hero
+    z-index:60; //на планшете (768) поднимем поверх hero
 }
 .b-action__list{
     @extend .g-clearlist;
