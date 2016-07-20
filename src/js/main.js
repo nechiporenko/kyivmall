@@ -266,8 +266,8 @@ jQuery(document).ready(function ($) {
                 var $el = $slider.children('li').eq(i),
                     $elXS = $el.find('.h-hero__img--xs'),
                     $elXL = $el.find('.h-hero__img--xl');
-                $elXS.css('background-image', 'url(' + heroSlider.imgXS[i] + ')');
-                $elXL.css('background-image', 'url(' + heroSlider.imgXL[i] + ')');
+                $elXS.css('background-image', 'url(' + $elXS.data('src') + ')');
+                $elXL.css('background-image', 'url(' + $elXL.data('src') + ')');
             };
         }
 
@@ -281,7 +281,7 @@ jQuery(document).ready(function ($) {
             pager: false,
             auto: true,
             pause: 12000,
-            onSliderLoad: addImages
+            onSliderLoad: addImages()
         });
     })();
 
@@ -691,8 +691,9 @@ jQuery(document).ready(function ($) {
             };
         };
 
-        method.show2images();
+        
         $slider.bxSlider(method.getSliderSettings());//запускаем слайдер
+        method.show2images();//показали первые 2 картинки
         $(window).bind('resize', method.startResize);//пересчитываем кол-во видимых элементов при ресайзе окна с задержкой .2с
     })();
 

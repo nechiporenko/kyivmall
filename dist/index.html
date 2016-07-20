@@ -89,8 +89,8 @@
             </div>
             <ul class="h-hero js-hero">
                 <li class="h-hero__item">
-                    <div class="h-hero__img h-hero__img--xs"></div>
-                    <div class="h-hero__img h-hero__img--xl"></div>
+                    <div class="h-hero__img h-hero__img--xs" data-src="img/del/hero01-xs.jpg"></div>
+                    <div class="h-hero__img h-hero__img--xl" data-src="img/del/hero01-xl.jpg"></div>
                     <figure class="h-hero__wrapper">
                         <figcaption class="h-hero__inner">
                             <h1 class="h-hero__title">ТРЦ «Киев Молл»</h1>
@@ -102,8 +102,8 @@
                     
                 </li>
                 <li class="h-hero__item">
-                    <div class="h-hero__img h-hero__img--xs"></div>
-                    <div class="h-hero__img h-hero__img--xl"></div>
+                    <div class="h-hero__img h-hero__img--xs" data-src="img/del/hero02-xs.jpg"></div>
+                    <div class="h-hero__img h-hero__img--xl" data-src="img/del/hero02-xl.jpg"></div>
                     <figure class="h-hero__wrapper">
                         <figcaption class="h-hero__inner">
                             <span class="h-hero__title">Факты в цифрах</span>
@@ -114,8 +114,8 @@
                     </figure>
                 </li>
                 <li class="h-hero__item">
-                    <div class="h-hero__img h-hero__img--xs"></div>
-                    <div class="h-hero__img h-hero__img--xl"></div>
+                    <div class="h-hero__img h-hero__img--xs" data-src="img/del/hero03-xs.jpg"></div>
+                    <div class="h-hero__img h-hero__img--xl" data-src="img/del/hero03-xl.jpg"></div>
                     <figure class="h-hero__wrapper">
                         <figcaption class="h-hero__inner">
                             <span class="h-hero__title">Идеальное пространство для шоппинга</span>
@@ -126,8 +126,8 @@
                     </figure>
                 </li>
                 <li class="h-hero__item">
-                    <div class="h-hero__img h-hero__img--xs"></div>
-                    <div class="h-hero__img h-hero__img--xl"></div>
+                    <div class="h-hero__img h-hero__img--xs" data-src="img/del/hero04-xs.jpg"></div>
+                    <div class="h-hero__img h-hero__img--xl" data-src="img/del/hero04-xl.jpg"></div>
                     <figure class="h-hero__wrapper">
                         <figcaption class="h-hero__inner">
                             <span class="h-hero__title">Уникальное местораспо&shy;ложение</span>
@@ -140,16 +140,13 @@
             </ul>
             
             <script>
-                var heroSlider = {
-                    imgXS: ['img/del/hero01-xs.jpg', 'img/del/hero02-xs.jpg', 'img/del/hero03-xs.jpg', 'img/del/hero04-xs.jpg'],
-                    imgXL: ['img/del/hero01-xl.jpg', 'img/del/hero02-xl.jpg', 'img/del/hero03-xl.jpg', 'img/del/hero04-xl.jpg']
-                };
+                (function () {
+                    var elXS = document.getElementsByClassName('h-hero__img--xs')[0],
+                        elXL = document.getElementsByClassName('h-hero__img--xl')[0];
 
-                var elXS = document.getElementsByClassName('h-hero__img--xs')[0],
-                    elXL = document.getElementsByClassName('h-hero__img--xl')[0];
-
-                elXS.style.backgroundImage = 'url(' + heroSlider.imgXS[0] + ')';
-                elXL.style.backgroundImage = 'url(' + heroSlider.imgXL[0] + ')';
+                    elXS.style.backgroundImage = 'url(' + elXS.getAttribute('data-src') + ')';
+                    elXL.style.backgroundImage = 'url(' + elXL.getAttribute('data-src') + ')';
+                })();
             </script>
         </section>
         <!--/b-header__hero-->
