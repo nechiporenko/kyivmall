@@ -94,6 +94,7 @@
     display:block;
     font-family:$font-bold;
     @include font-size(68px);
+    letter-spacing:rem(-.9px);
 }
 
 .b-post__month{
@@ -130,6 +131,9 @@
 /*Post Slider*/
 .b-slider{
     @extend .g-container__inner;
+    position:relative;
+    padding-bottom:32px;
+
     .bx-wrapper{
         .bx-controls-direction a{
             margin-top:0;
@@ -167,4 +171,42 @@
 
 .b-slider__item{
     @extend .g-column;
+}
+
+//pager
+.b-slider__pager{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+}
+
+.b-slider__inner{
+    width:100%;
+    max-width:810px;
+    margin:0 auto;
+    text-align:right;
+    font-size:0;
+}
+
+.b-slider__btn{
+    @extend .g-clearbutton;
+    @include size(32px);
+    line-height:36px;
+    font-size:rem(18px);
+    color:$primary;
+
+    &:hover,
+    &:active{
+        color:$text-color;
+    }
+}
+
+.b-slider__counter{
+    display:inline-block;
+    vertical-align:middle;
+    height:32px;
+    margin:0 10px;
+    line-height:32px;
+    font-size:rem(18px);
 }

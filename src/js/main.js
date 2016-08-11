@@ -278,7 +278,7 @@ jQuery(document).ready(function ($) {
             prevText: '<i class="icon-left"></i>',
             nextSelector: $slider.parent().find('.h-hero__next'),
             prevSelector: $slider.parent().find('.h-hero__prev'),
-            pager: false,
+            pager: true,
             auto: true,
             pause: 12000,
             onSliderLoad: addImages()
@@ -588,10 +588,13 @@ jQuery(document).ready(function ($) {
     //---------------------------------------------------------------------------------------
     (function () {
         var $slider = $('.js-post-slider'),
+            $counter = $slider.parent().find('.js-post-counter'),
             rtime, //переменные для пересчета ресайза окна с задержкой delta - будем показывать разное кол-во слайдов на разных разрешениях
             timeout = false,
             delta = 200,
+            BREAKPOINT = 768,
             isImagesLoaded = false, //при загрузке слайдера покажем 2 первые фотки, остальные - после первой прокрутки слайдера
+            slideQty = 0, //будем хранить кол-во слайдов
             method = {};
 
         method.getSliderSettings = function () {
@@ -621,18 +624,26 @@ jQuery(document).ready(function ($) {
                         nextText: '<i class="icon-right"></i>',
                         prevText: '<i class="icon-left"></i>',
                         pager: false,
+                        onSliderLoad: function (currentIndex) {
+                            slideQty = +$slider.getSlideCount();
+                            $counter.text(currentIndex + 1 + ' / ' + slideQty); //счетчик слайдов
+                            return slideQty;
+                        },
                         onSlideBefore: function () {//если картинки не загружены - загружаем
                             if (!isImagesLoaded) {
                                 method.showAllImages();
                             };
+                        },
+                        onSlideAfter: function ($slideElement, oldIndex, newIndex) {
+                            $counter.text(newIndex + 1 + ' / ' + slideQty);
                         }
                     },
                     winW = $.viewportW(); //ширина окна
 
-            if (winW < 768) {
+            if (winW < BREAKPOINT) {
                 setting = $.extend(settings1, common);
             };           
-            if (winW >= 768 && winW < 1200) {
+            if (winW >= BREAKPOINT && winW < 1200) {
                 setting = $.extend(settings2, common);
             };
             if (winW >= 1200) {
@@ -695,6 +706,21 @@ jQuery(document).ready(function ($) {
         $slider.bxSlider(method.getSliderSettings());//запускаем слайдер
         method.show2images();//показали первые 2 картинки
         $(window).bind('resize', method.startResize);//пересчитываем кол-во видимых элементов при ресайзе окна с задержкой .2с
+
+        //перемотка в начало
+        $('.b-slider__pager').on('click', '.js-post-first', function () {
+            $slider.goToSlide(0);
+        });
+
+        //перемотка в конец
+        $('.b-slider__pager').on('click', '.js-post-last', function () {//корректируем значение последнего слайда в зависимости от кол-ва видимых элементов слайдера
+            var winW = $.viewportW();
+            if (winW < BREAKPOINT) {
+                $slider.goToSlide(slideQty - 1);
+            } else {
+                $slider.goToSlide(slideQty - 2);
+            }
+        });
     })();
 
     //

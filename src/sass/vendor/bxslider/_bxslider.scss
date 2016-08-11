@@ -24,21 +24,66 @@ $loader:   '../img/loader.gif';
 	.bx-pager,
 	.bx-controls-auto {
 		position: absolute;
-        bottom: $project-line-height;
-		width: 100%;	
+        bottom: 3*$project-line-height;
+		width: 100%;
+        z-index:60;
+        //display:none;
+
+        //@include media($small){
+        //    display:block;
+        //}
 	}
 }
 
 // LOADER
 .bx-wrapper .bx-loading {
 	min-height: 50px;
-	background: url($loader) center center no-repeat #fff;
+	background: url($loader) center center no-repeat;
 	height: 100%;
 	width: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 2000;
+}
+
+// PAGER
+.bx-wrapper {
+	.bx-pager {
+		text-align: center;
+		font-size: .85em;
+		font-family: Arial;
+		font-weight: bold;
+		color: #666;
+
+		&.bx-default-pager a {
+			background: #fff;
+			@include hide-text;
+			display: block;
+			@include size(10px);
+			margin: 0 8px;
+			outline: 0;
+			border-radius: 50%;
+            opacity:.4;
+            box-sizing:border-box;
+            border:2px solid #fff;
+
+			&:hover,
+			&.active{
+				opacity:1;
+                background:$primary;
+			}
+		}
+	}
+	.bx-pager-item,
+	.bx-controls-auto .bx-controls-auto-item {
+		display: inline-block;
+        vertical-align:middle;
+	}
+	.bx-pager-item {
+		font-size: 0;
+		line-height: 0;
+	}
 }
 
 
