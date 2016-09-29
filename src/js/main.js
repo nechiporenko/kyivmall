@@ -1,3 +1,59 @@
+//Modal windows:
+(function ($) {
+    //пример вызова:
+    //$('#modal_id').popup('open')  - открыть
+    //$('#modal_id').popup('close') - закрыть
+
+    $.fn.popup = function (action) {
+        var modal_id = this.selector, //id окна
+            $modal = $(modal_id), //контент окна
+            $body = $('body'),
+            $window = $(window),
+            $overlay = $('#overlay'),
+            $close = $('<button type="button" class="modal__close"><i class="icon-cross"></i></button>'), //кнопка закрыть
+            method = {};
+
+        method.center = function () {//центрируем окно
+            var top, left;
+            top = Math.max($window.height() - $modal.outerHeight(), 0) / 2;
+            left = Math.max($window.width() - $modal.outerWidth(), 0) / 2;
+
+            $modal.css({
+                top: top + $window.scrollTop(),
+                left: left + $window.scrollLeft()
+            });
+        };
+
+        method.open = function () {//открываем
+            method.center();//отцентрировали
+            $window.bind('resize.modal', method.center);//при ресайзе - пересчитаем положение окна
+
+            var isCloseExist = $modal.find('.modal__close').length;
+            if (isCloseExist < 1) {//если открываем первый раз - добавляем кнопку Закрыть
+                $modal.append($close);
+            };
+            $modal.show();
+            $('#overlay').show().bind('click', method.close);
+        };
+
+        method.close = function () {//закрываем окно
+            $modal.hide();
+            $('#overlay').hide().unbind('click', method.close);
+            $window.unbind('resize.modal');
+        };
+        $modal.on('click', '.modal__close', method.close); //закроем окно при клике по кнопке
+
+        if (action === 'open' && $modal.length) {//открываем
+            method.open();
+        };
+
+        if (action === 'close') {//закрываем
+            method.close();
+        };
+    };
+}(jQuery));
+
+
 // Application Scripts:
 
 // Переключатель языка
@@ -9,7 +65,7 @@
 // HERO slider
 // Фотогалерея
 // Вкладки
-// Модальное окно
+// Модальное окно - откроем по клику на [data-modal]
 // Покажем новость в модальном окне
 // Слайдер новостей
 // Гугл карта
@@ -508,64 +564,13 @@ jQuery(document).ready(function ($) {
     })();
 
     //
-    // Модальное окно
+    // Модальное окно - откроем по клику на [data-modal]
     //---------------------------------------------------------------------------------------
-    var showModal = (function (link) {
-        var
-        method = {},
-        $modal,
-        $window = $(window),
-        $overlay = $('#overlay'),
-        $close;
-
-        $close = $('<button type="button" class="modal__close"><i class="icon-cross"></i></button>'); //иконка закрыть
-
-
-        $close.on('click', function (e) {
-            e.preventDefault();
-            method.close();
-        });
-
-        // центрируем окно
-        method.center = function () {
-            var top, left;
-            top = Math.max($window.height() - $modal.outerHeight(), 0) / 2;
-            left = Math.max($window.width() - $modal.outerWidth(), 0) / 2;
-
-            $modal.css({
-                top: top + $window.scrollTop(),
-                left: left + $window.scrollLeft()
-            });
-        };
-
-
-        // открываем
-        method.open = function (link) {
-            $modal = $(link);
-            $modal.append($close);
-            method.center();
-            $window.bind('resize.modal', method.center);
-            $modal.show();
-            $overlay.show().bind('click', method.close);
-        };
-
-        // закрываем
-        method.close = function () {
-            $modal.hide();
-            $overlay.hide().unbind('click', method.close);
-            $window.unbind('resize.modal');
-        };
-
-        // клик по кнопке с атрибутом data-modal - открываем модальное окно
-        $('[data-modal]').on('click', function (e) {//передаем айди модального окна
-            e.preventDefault();
-            var link = $(this).data('modal');
-            if (link) { showModal.open(link); }
-        });
-
-        return method;
-    }());
-
+    $(document).on('click', '[data-modal]', function (e) {
+        e.preventDefault();
+        var modal_id = $(this).data('modal');
+        if (modal_id.length) { $(modal_id).popup('open'); }
+    });
 
     //
     // Покажем новость в модальном окне
@@ -573,12 +578,12 @@ jQuery(document).ready(function ($) {
     (function () {
         $('.b-post').on('click', '.js-loadpost', function (e) {
             e.preventDefault();
-            var modal = $(this).attr('href'),
+            var modal_id = $(this).attr('href'),
                 target = $(this).data('load'),
-                $inner = $(modal).children('div');
+                $inner = $(modal_id).children('div');
             $inner.html();
             $inner.load(target, function () {
-                showModal.open(modal);
+                $(modal_id).popup('open');
             });
         });
     })();

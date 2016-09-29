@@ -14,7 +14,6 @@
     display:none;
 }
 
-/*Loader*/
 .loader{
     position:absolute;
     width:32px;
@@ -54,4 +53,14 @@
     right:15px;
     text-decoration:none;
     color:$primary;
+}
+
+.modal--msg{
+    max-width:500px;
+    text-align:center;
+
+    .g-title,
+    .g-subtitle{
+        margin:$project-line-height 0;
+    }
 }
